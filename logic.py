@@ -3,7 +3,7 @@ from typing import List
 from validation import *
 from client import *
 
-sex create_attack()->AttackCommand:
+def create_attack()->AttackCommand:
     pass
     
 def create_build()->Coords:
