@@ -23,17 +23,24 @@ class Labaratory:
     def __init__(self,session:requests.Session):
         self.session:requests.Session = session
         self.session.headers.update({"X-Auth-Token":TOKEN})
-    def commands(self,payload):
-        pass
-    
+        
+    def commands(self,payload:CommandRequest):
+        res = self.session.post(url=url+commands_endpoint,json=CommandRequest.model_dump_json(payload))
+        if(res.status_code != 200):
+            return Error.model_validate_json(res.content)
+        return Commands.model_validate_json(res.content)
     
     def participate(self):
         res = self.session.put(url=url+participate_endpoint)
         if(res.status_code != 200):
             return Error.model_validate_json(res.content)
-        return res.content
+        return Participate.model_validate_json(res.content)
+    
     def rounds(self):
-        pass
+        res = self.session.get(url=url+rounds_endpoint)
+        if(res.status_code != 200):
+            return Error.model_validate_json(res.content)
+        return res.content
     
     def units(self):
         res = self.session.get(url=url+units_endpoint)
@@ -41,13 +48,14 @@ class Labaratory:
             return Error.model_validate_json(res.content)
         return UnitsChanging.model_validate_json(res.content)
 
-        
-    
     def world(self):
-        pass
+        res = self.session.get(url=url+world_endpoint)
+        if(res.status_code != 200):
+            return Error.model_validate_json(res.content)
+        return UnitsNotChanging.model_validate_json(res.content)
         
     
 session = requests.Session()
 l = Labaratory(session)
 
-print(l.participate())
+print(l.units())

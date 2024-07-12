@@ -15,44 +15,44 @@ class AttackCommand(pydantic.BaseModel):
     target:Coords
 
 class AcceptedCommands(pydantic.BaseModel):
-    attack:list[AttackCommand]
-    build:list[Coords]
-    move_base:Coords
+    attack:list[AttackCommand|None]|None
+    build:list[Coords|None]|None
+    move_base:Coords|None
     
 class Commands(pydantic.BaseModel):
-    accepted_commands:AcceptedCommands = pydantic.Field(validation_alias='acceptedCommands')
-    errors:list[str|None]
+    accepted_commands:AcceptedCommands|None = pydantic.Field(validation_alias='acceptedCommands')
+    errors:list[str|None]|None
 
 class Participate(pydantic.BaseModel):
     start_in:int = pydantic.Field(validation_alias="startsInSec")
 
 class Block(pydantic.BaseModel):
-    attack:int
-    health:int
-    id:str
-    range:int
+    attack:int|None
+    health:int|None
+    id:str|None
+    range:int|None
     is_head:bool|None = pydantic.Field(validation_alias="isHead")
     last_attack:Coords|None = pydantic.Field(validation_alias="lastAttack")
     name:str|None
-    x:int
-    y:int
+    x:int|None
+    y:int|None
     
 class EnemyBlock(pydantic.BaseModel):
     attack:int
     health:int
-    is_head:bool = pydantic.Field(validation_alias="isHead")
-    last_attack:Coords = pydantic.Field(validation_alias="lastAttack")
+    is_head:bool|None = pydantic.Field(validation_alias="isHead")
+    last_attack:Coords|None = pydantic.Field(validation_alias="lastAttack")
     name:str
     x:int
     y:int
     
 class Player(pydantic.BaseModel):
-    enemy_block_kills:int = pydantic.Field(validation_alias="enemyBlockKills")
+    enemy_block_kills:int|None = pydantic.Field(validation_alias="enemyBlockKills")
     game_ended_at:str|None = pydantic.Field(validation_alias="gameEndedAt")
     gold:int
     name:str
-    points:int
-    zombie_kills:int = pydantic.Field(validation_alias="zombieKills")
+    points:int|None
+    zombie_kills:int|None = pydantic.Field(validation_alias="zombieKills")
         
 class Zombie(pydantic.BaseModel):
     attack:int
@@ -61,14 +61,14 @@ class Zombie(pydantic.BaseModel):
     id:str
     speed:int
     type:str
-    wait_turns:int = pydantic.Field(validation_alias='waitTurns')
+    wait_turns:int|None = pydantic.Field(validation_alias='waitTurns')
     x:int
     y:int
 
 class Zpot(pydantic.BaseModel):
-    x:int
-    y:int
-    type:str
+    x:int|None
+    y:int|None
+    type:str|None
 
 class UnitsChanging(pydantic.BaseModel):
     base:list[Block|None]|None
@@ -81,7 +81,7 @@ class UnitsChanging(pydantic.BaseModel):
 
 class UnitsNotChanging(pydantic.BaseModel):
     realm_name:str = pydantic.Field(validation_alias="realmName")
-    zpots:list[Zpot]
+    zpots:list[Zpot|None]|None
     
 class Round(pydantic.BaseModel):
     duration:int
@@ -93,17 +93,17 @@ class Round(pydantic.BaseModel):
     
 class GameRounds(pydantic.BaseModel):
     game_name:str = pydantic.Field(validation_alias="gameName")
-    now:str
-    rounds:list[Round]
+    now:str|None
+    rounds:list[Round|None]|None
     
     
 class BaseRequest(pydantic.BaseModel):
-    api_key:str = pydantic.Field(validation_alias="X-Auth-Token")
+    api_key:str = pydantic.Field(serialization_alias="X-Auth-Token")
 
 class CommandRequest(pydantic.BaseModel):
-    attack:list[AttackCommand]
-    build:list[Coords]
-    move_base:Coords = pydantic.Field(validation_alias="moveBase")
+    attack:list[AttackCommand|None]|None
+    build:list[Coords|None]|None
+    move_base:Coords|None = pydantic.Field(serialization_alias="moveBase")
     
 class Error(pydantic.BaseModel):
     err_code:int = pydantic.Field(validation_alias='errCode')
