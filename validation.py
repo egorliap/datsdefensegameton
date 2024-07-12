@@ -7,12 +7,12 @@ class BaseRequest(pydantic.BaseModel):
      
     
 class Coords(pydantic.BaseModel):
-    x:int
-    y:int
+    x:int|None
+    y:int|None
 
 class AttackCommand(pydantic.BaseModel):
-    block_id:str = pydantic.Field(validation_alias='blockId')
-    target:Coords
+    block_id:None|str = pydantic.Field(validation_alias='blockId')
+    target:Coords|None
 
 class AcceptedCommands(pydantic.BaseModel):
     attack:list[AttackCommand|None]|None
@@ -31,9 +31,8 @@ class Block(pydantic.BaseModel):
     health:int|None
     id:str|None
     range:int|None
-    is_head:bool|None = pydantic.Field(validation_alias="isHead")
+    is_head:bool|None = pydantic.Field(validation_alias="isHead",)
     last_attack:Coords|None = pydantic.Field(validation_alias="lastAttack")
-    name:str|None
     x:int|None
     y:int|None
     
