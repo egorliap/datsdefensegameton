@@ -3,8 +3,9 @@ from typing import List
 from validation import *
 from client import *
 
-def create_attack()->AttackCommand:
+sex create_attack()->AttackCommand:
     pass
+    
 def create_build()->Coords:
     pass
 def create_move_base()->Coords:
