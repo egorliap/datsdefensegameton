@@ -84,12 +84,12 @@ class UnitsNotChanging(pydantic.BaseModel):
     zpots:list[Zpot|None]|None
     
 class Round(pydantic.BaseModel):
-    duration:int
-    end_at:str = pydantic.Field(validation_alias="endAt")
-    name:str
-    repeat:int
-    start_at:str = pydantic.Field(validation_alias="startAt")
-    status:str
+    duration:int|None
+    end_at:str|None = pydantic.Field(validation_alias="endAt")
+    name:str|None
+    
+    start_at:str|None = pydantic.Field(validation_alias="startAt")
+    status:str|None
     
 class GameRounds(pydantic.BaseModel):
     game_name:str = pydantic.Field(validation_alias="gameName")

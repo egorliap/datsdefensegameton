@@ -40,7 +40,7 @@ class Labaratory:
         res = self.session.get(url=url+rounds_endpoint)
         if(res.status_code != 200):
             return Error.model_validate_json(res.content)
-        return res.content
+        return GameRounds.model_validate_json(res.content)
     
     def units(self):
         res = self.session.get(url=url+units_endpoint)
@@ -58,4 +58,4 @@ class Labaratory:
 session = requests.Session()
 l = Labaratory(session)
 
-print(l.units())
+print(l.participate())
