@@ -71,13 +71,13 @@ class Zpot(pydantic.BaseModel):
     type:str
 
 class UnitsChanging(pydantic.BaseModel):
-    base:list[Block]
-    enemy_blocks:list[EnemyBlock] = pydantic.Field(validation_alias='enemyBlocks')
-    player:Player
-    realm_name:str = pydantic.Field(validation_alias="realmName")
-    turn:int
-    turn_ends_in_ms:int = pydantic.Field(validation_alias="turnEndsInMs")    
-    zombies:list[Zombie]
+    base:list[Block|None]|None
+    enemy_blocks:list[EnemyBlock|None]|None = pydantic.Field(validation_alias='enemyBlocks')
+    player:Player|None
+    realm_name:str|None = pydantic.Field(validation_alias="realmName")
+    turn:int|None
+    turn_ends_in_ms:int|None = pydantic.Field(validation_alias="turnEndsInMs")    
+    zombies:list[Zombie|None]|None
 
 class UnitsNotChanging(pydantic.BaseModel):
     realm_name:str = pydantic.Field(validation_alias="realmName")
