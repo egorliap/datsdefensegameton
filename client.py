@@ -25,7 +25,7 @@ class Labaratory:
         self.session.headers.update({"X-Auth-Token":TOKEN})
         
     def commands(self,payload:CommandRequest):
-        res = self.session.post(url=url+commands_endpoint,json=CommandRequest.model_dump_json(payload))
+        res = self.session.post(url=url+commands_endpoint,data=payload)
         if(res.status_code != 200):
             return Error.model_validate_json(res.content)
         return Commands.model_validate_json(res.content)
@@ -55,7 +55,4 @@ class Labaratory:
         return UnitsNotChanging.model_validate_json(res.content)
         
     
-session = requests.Session()
-l = Labaratory(session)
 
-print(l.participate())

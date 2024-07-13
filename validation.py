@@ -11,13 +11,13 @@ class Coords(pydantic.BaseModel):
     y:int|None
 
 class AttackCommand(pydantic.BaseModel):
-    block_id:None|str = pydantic.Field(validation_alias='blockId')
+    block_id:None|str = pydantic.Field(validation_alias='blockId',serialization_alias='blockId')
     target:Coords|None
 
 class AcceptedCommands(pydantic.BaseModel):
     attack:list[AttackCommand|None]|None
     build:list[Coords|None]|None
-    move_base:Coords|None
+    move_base:Coords|None = pydantic.Field(validation_alias='moveBase',serialization_alias='moveBase')
     
 class Commands(pydantic.BaseModel):
     accepted_commands:AcceptedCommands|None = pydantic.Field(validation_alias='acceptedCommands')
@@ -31,19 +31,19 @@ class Block(pydantic.BaseModel):
     health:int|None
     id:str|None
     range:int|None
-    is_head:bool|None = pydantic.Field(validation_alias="isHead",)
+    #is_head:bool|None = pydantic.Field(validation_alias="isHead")
     last_attack:Coords|None = pydantic.Field(validation_alias="lastAttack")
     x:int|None
     y:int|None
     
 class EnemyBlock(pydantic.BaseModel):
-    attack:int
-    health:int
-    is_head:bool|None = pydantic.Field(validation_alias="isHead")
+    attack:int|None
+    health:int|None
+    #is_head:bool|None = pydantic.Field(validation_alias="isHead")
     last_attack:Coords|None = pydantic.Field(validation_alias="lastAttack")
-    name:str
-    x:int
-    y:int
+    #name:str|None
+    x:int|None
+    y:int|None
     
 class Player(pydantic.BaseModel):
     enemy_block_kills:int|None = pydantic.Field(validation_alias="enemyBlockKills")
