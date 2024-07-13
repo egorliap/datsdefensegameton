@@ -1,4 +1,5 @@
 from typing import List
+import math as m
 
 from validation import *
 
@@ -12,6 +13,8 @@ def evaluate_direction(z: Zombie):
     if z.direction == "right":
         return Coords(x=z.x + z.speed,y=z.y)
     
+def dist(x1,y1,x2,y2):
+    return m.sqrt((x2-x1)**2 + (y2-y1)**2)
 
 class Defender:
     def __init__(self,zombies,base_blocks) -> None:
@@ -21,7 +24,8 @@ class Defender:
         arr =[]
         for zombie in self.zombies:
             for block in self.base:
-                if(abs(evaluate_direction(zombie).x - block.x)<=3 and abs(evaluate_direction(zombie).y - block.y)<=3):
+                zdest = evaluate_direction(zombie)
+                if(dist(zdest.x,zdest.y,block.x,block.y)<=5):
                     arr.append( (zombie,block))
         return arr
                     

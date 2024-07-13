@@ -1,3 +1,4 @@
+import math as m
 from typing import List
 import validation
 class Build:
@@ -20,4 +21,5 @@ class Build:
             res.append(validation.Coords(x=max(ranges[key])+1,y=key))
         return res
             
-    
+    def rebase(self):
+        pass

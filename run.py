@@ -4,7 +4,7 @@ import requests
 import validation
 import zombies
 import build
-
+import enemies
 import logic
 session = requests.Session()
 
@@ -15,7 +15,7 @@ async def participate():
         res = lab.participate()
         if(isinstance(res,validation.Participate)):
             print(f"{res.start_in=}")
-            await asyncio.sleep(res.start_in+0.4)
+            await asyncio.sleep(res.start_in+1)
             units = logic.get_units()
             
             
@@ -29,25 +29,20 @@ async def participate():
         elif(res.err_code > 50):
             
             if(units):
-                defender = zombies.Defender(logic.get_zombies_list(units),logic.get_base_info(units))
-                attacking = defender.get_attacking_next_tick()
-                #print(f"{attacking=}")
-                heal = defender.heal()
-                
-                #print(f"{heal=}")
+                units = logic.get_units()
                 base = units.base
-                b = build.Build(base)
-                result = lab.commands(validation.CommandRequest(attack=heal,build=b.get_outter(),move_base=validation.Coords(x=base[1].x,y=base[1].y)).model_dump_json(by_alias=True))
+                zmbs = units.zombies
+                enemy_blocks = units.enemy_blocks
+                defender = zombies.Defender(zmbs,base)
+                en_attacker = enemies.Enemy(enemy_blocks,base)
+                builder = build.Build(base)
+                
+                result = lab.commands(validation.CommandRequest(attack=defender.heal()+en_attacker.attack(),build=builder.get_outter(),move_base=validation.Coords(x=base[1].x,y=base[1].y)).model_dump_json(by_alias=True))
 
                 print(result)
                 
                 await asyncio.sleep(units.turn_ends_in_ms/1000)
-                units = logic.get_units()
                 
-                
-                
-            
-            
         else:
             print(res.error)
             await asyncio.sleep(30)

@@ -31,7 +31,7 @@ class Block(pydantic.BaseModel):
     health:int|None
     id:str|None
     range:int|None
-    #is_head:bool|None = pydantic.Field(validation_alias="isHead")
+    isHead:bool|None = pydantic.Field(validation_alias="isHead")
     last_attack:Coords|None = pydantic.Field(validation_alias="lastAttack")
     x:int|None
     y:int|None
@@ -39,7 +39,7 @@ class Block(pydantic.BaseModel):
 class EnemyBlock(pydantic.BaseModel):
     attack:int|None
     health:int|None
-    #is_head:bool|None = pydantic.Field(validation_alias="isHead")
+    isHead:bool|None = pydantic.Field(validation_alias="isHead")
     last_attack:Coords|None = pydantic.Field(validation_alias="lastAttack")
     #name:str|None
     x:int|None
